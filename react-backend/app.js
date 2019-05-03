@@ -46,9 +46,18 @@ const connection = mysql.createConnection({
   database:'test'
 });
 
-connection.connect(function(err){
-(err)? console.log(err+'+++++++++++++++//////////'): console.log('connection********');
+connection.connect(function(err) {
+  if (err) throw err;
+  //Select all customers and return the result object:
+  connection.query("SELECT * FROM test_predictions LIMIT 10;", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+  });
 });
+
+/*connection.connect(function(err){
+(err)? console.log(err+'+++++++++++++++//////////'): console.log('connection********');
+});*/
 
 //require('./routes/users')(app, connection);
 
