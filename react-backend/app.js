@@ -7,6 +7,14 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user:'admin',
+  password:'DeepRisk&&',//password of your mysql db
+  database:'test'
+});
+
 var app = express();
 
 // view engine setup
@@ -38,13 +46,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });*/
 
-const mysql = require('mysql');
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user:'admin',
-  password:'DeepRisk&&',//password of your mysql db
-  database:'test'
-});
+
 
 app.get('/predictions', function(req, res) {
 
@@ -61,9 +63,9 @@ app.get('/predictions', function(req, res) {
 
 })
 
-app.listen(3001, () => {
+/*app.listen(3001, () => {
   console.log('Go to http://localhost:3001/predictions to see query results');
- });
+ });*/
 
 
 
