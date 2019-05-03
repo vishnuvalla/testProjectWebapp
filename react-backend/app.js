@@ -1,16 +1,17 @@
-var createError = require('http-errors');
+//var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const bodyParser = require('body-parser')
+//var path = require('path');
+//var cookieParser = require('cookie-parser');
+//var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//var indexRouter = require('./routes/index');
+//var usersRouter = require('./routes/users');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+/*app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
@@ -36,7 +37,7 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
+});*/
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
@@ -46,14 +47,26 @@ const connection = mysql.createConnection({
   database:'test'
 });
 
-connection.connect(function(err) {
-  if (err) throw err;
-  //Select all customers and return the result object:
-  connection.query("SELECT * FROM test_predictions LIMIT 10;", function (err, result, fields) {
+app.get('/predictions', function(req, res) {
+
+  connection.connect();
+
+
+  connection.query("SELECT * FROM test_predictions LIMIT 10;", function (error, result, fields) {
     if (err) throw err;
     console.log(result);
+    res.send(results)
   });
-});
+
+  connection.end();
+
+})
+
+app.listen(3001, () => {
+  console.log('Go to http://localhost:3001/predictions to see query results');
+ });
+
+
 
 /*connection.connect(function(err){
 (err)? console.log(err+'+++++++++++++++//////////'): console.log('connection********');
@@ -61,4 +74,4 @@ connection.connect(function(err) {
 
 //require('./routes/users')(app, connection);
 
-module.exports = app;
+//module.exports = app;
