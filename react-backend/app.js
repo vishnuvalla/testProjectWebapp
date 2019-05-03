@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/html-routes');
 
 var app = express();
 
@@ -38,18 +38,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
-var mysql = require("mysql");
-//Database connection
-app.use(function(req, res, next){
-	res.locals.connection = mysql.createConnection({
-		host     : 'localhost',
-		user     : 'admin',
-		password : 'DeepRisk&&',
-		database : 'test'
-	});
-	res.locals.connection.connect();
-	next();
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+host: 'localhost',
+user:'admin',
+password:'DeepRisk&&',//password of your mysql db
+database:'test'
 });
 
 connection.connect(function(err){
