@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/html-routes', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -38,12 +38,18 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const mysql = require('mysql');
-const connection = mysql.createConnection({
-host: 'localhost',
-user:'admin',
-password:'DeepRisk&&',//password of your mysql db
-database:'test'
+
+var mysql = require("mysql");
+//Database connection
+app.use(function(req, res, next){
+	res.locals.connection = mysql.createConnection({
+		host     : 'localhost',
+		user     : 'admin',
+		password : 'DeepRisk&&',
+		database : 'test'
+	});
+	res.locals.connection.connect();
+	next();
 });
 
 connection.connect(function(err){
