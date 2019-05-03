@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function(app, connection) {
     connection.query('SELECT * FROM test_predictions LIMIT 10;', function(err, results, fields) {
       (err)?res.send(err):res.send(JSON.stringify(results));
   });

@@ -40,10 +40,10 @@ app.use(function(err, req, res, next) {
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-host: 'localhost',
-user:'admin',
-password:'DeepRisk&&',//password of your mysql db
-database:'test'
+  host: 'localhost',
+  user:'admin',
+  password:'DeepRisk&&',//password of your mysql db
+  database:'test'
 });
 
 connection.connect(function(err){
